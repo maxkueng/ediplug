@@ -103,7 +103,7 @@ Configuration options.
 
 Holds information about the device.
 
- - `vendor: string`: Name of the vendor of the plug. Is is probably always
+ - `vendor: string`: Name of the vendor of the plug. This is probably always
    "Edimax" but who knows.
  - `model: string`: Model name of the plug. For example: "SP2101W_V2".
  - `fwVersion: string`: Version of the firmware running on the plug.
@@ -150,8 +150,8 @@ See [Options](#interface-options).
 ### `report = await getReport(options: Options): Promise<Report>`
 
 Get a status report of the plug that contains relay state, power usage in
-watts, current in ampere, as well as energy usage of the current day, week, and
-month.
+watts, current in ampere, as well as total energy usage of the current day,
+week, and month.
 See [Options](#interface-options), [Report](#interface-report).
 
 ### `await turnOn(options: Options): Promise<void>`
@@ -179,7 +179,7 @@ passwords to their plugs and changed their firmware to set a random password
 during the setup process and hide it from the user.
 
 However, a kind user on the Node-RED forum provided [step-by-step
-instructions][setup-instructions] on how to optain the generated password
+instructions][setup-instructions] on how to obtain the generated password
 during setup.
 
   1. Set up the plug as usual using the EdiSmart app and connect it to your
@@ -209,11 +209,11 @@ during setup.
 
   6. On your smarphone, open the EdiSmart app.
 
-  7. On your PC, connect to your normal wifi again.
+  7. On your PC, connect back to your regular wifi.
 
   8. On your smartphone, proceed with the setup of the plug and choose the wifi
      network that it should use and provide the password. When prompted to
-     enter a new for your plug, do not proceed yet.
+     enter a new for your plug, _do not proceed yet._
 
   9. As soon as you are prompted to enter a name for your plug, open a Telnet
      connection on port 1355 on the IP obtained in step 1:  
