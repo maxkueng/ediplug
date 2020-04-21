@@ -1,0 +1,58 @@
+{
+  "name": "ediplug",
+  "version": "1.0.0",
+  "description": "Control your Eximax Smart Plugs",
+  "keywords": [
+    "typescript",
+    "smartplug",
+    "smartswitch",
+    "relay",
+    "homeautomation",
+    "edimax",
+    "sp-2101w v2",
+    "sp2101w v2",
+    "sp-2101w",
+    "sp2101w",
+    "sp-1101w v2",
+    "sp1101w v2",
+    "sp-1101w",
+    "sp1101w"
+  ],
+  "author": "Max Kueng (https://maxkueng.com/contact)",
+  "license": "MIT",
+  "homepage": "https://github.com/maxkueng/ediplug",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/maxkueng/ediplug.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maxkueng/ediplug/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "lint": "eslint src/*.ts",
+    "lint:fix": "eslint --fix src/*.ts",
+    "prepublish": "npm-run-all -s build"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.1",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "fast-xml-parser": "^3.16.0"
+  }
+}
