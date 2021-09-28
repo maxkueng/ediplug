@@ -76,28 +76,21 @@ enum ChallengeType {
   Basic,
   Digest,
   Unknown,
-};
-
-function getAuthType(
-  challenge: string,
-): ChallengeType {
-  const parts = challenge.split(' ');
-  let challengeType = ChallengeType.Unknown;
-
-  if (parts) {
-    if (parts[0] === 'Basic') {
-      challengeType = ChallengeType.Basic;
-    } else if (parts[0] === 'Digest') {
-      challengeType = ChallengeType.Digest;
-    }
-  }
-
-  return challengeType;
 }
 
-function getBasicAuthHeader(
-  credentials: LoginCredentials,
-): string {
+function getAuthType(challenge: string): ChallengeType {
+  const [type] = challenge.split(' ');
+  switch (type) {
+    case 'Basic':
+      return ChallengeType.Basic;
+    case 'Digest':
+      return ChallengeType.Digest;
+    default:
+      return ChallengeType.Unknown;
+  }
+}
+
+function getBasicAuthHeader(credentials: LoginCredentials): string {
   const auth = Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64');
   return [
     'Basic',
