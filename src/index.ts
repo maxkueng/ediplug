@@ -3,8 +3,6 @@ import { Agent } from 'http';
 import axios from 'axios';
 import parser from 'fast-xml-parser';
 
-import type { AxiosError } from 'axios';
-
 export interface Options {
   timeout?: number;
   host: string;
@@ -64,6 +62,7 @@ function md5(str: string): string {
 }
 
 interface AuthChallenge {
+  // eslint-disable-next-line camelcase
   digest_realm: string;
   nonce: string;
   qop: string;
@@ -166,7 +165,7 @@ async function sendCommand(
     });
 
     return parser.parse(response.data);
-  } catch (err: unknown | AxiosError) {
+  } catch (err: unknown) {
     if (axios.isAxiosError(err)) {
       const {
         request,
