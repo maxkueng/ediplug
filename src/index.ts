@@ -3,6 +3,8 @@ import { Agent } from 'http';
 import axios from 'axios';
 import parser from 'fast-xml-parser';
 
+import type { AxiosError } from 'axios';
+
 export interface Options {
   timeout?: number;
   host: string;
@@ -164,8 +166,8 @@ async function sendCommand(
     });
 
     return parser.parse(response.data);
-  } catch (err) {
-    if (err.isAxiosError) {
+  } catch (err: unknown | AxiosError) {
+    if (axios.isAxiosError(err)) {
       const {
         request,
         response,
