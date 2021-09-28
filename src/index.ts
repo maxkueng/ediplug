@@ -75,7 +75,7 @@ interface LoginCredentials {
 enum ChallengeType {
   Basic,
   Digest,
-  Unknown
+  Unknown,
 };
 
 function getAuthType(
