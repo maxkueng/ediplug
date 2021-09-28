@@ -62,6 +62,7 @@ function md5(str: string): string {
 }
 
 interface AuthChallenge {
+  // eslint-disable-next-line camelcase
   digest_realm: string;
   nonce: string;
   qop: string;
@@ -70,6 +71,32 @@ interface AuthChallenge {
 interface LoginCredentials {
   username: string;
   password: string;
+}
+
+enum ChallengeType {
+  Basic,
+  Digest,
+  Unknown,
+}
+
+function getAuthType(challenge: string): ChallengeType {
+  const [type] = challenge.split(' ');
+  switch (type) {
+    case 'Basic':
+      return ChallengeType.Basic;
+    case 'Digest':
+      return ChallengeType.Digest;
+    default:
+      return ChallengeType.Unknown;
+  }
+}
+
+function getBasicAuthHeader(credentials: LoginCredentials): string {
+  const auth = Buffer.from(`${credentials.username}:${credentials.password}`).toString('base64');
+  return [
+    'Basic',
+    auth,
+  ].join(' ');
 }
 
 function getAuthHeader(
@@ -138,21 +165,31 @@ async function sendCommand(
     });
 
     return parser.parse(response.data);
-  } catch (err) {
-    if (err.isAxiosError) {
+  } catch (err: unknown) {
+    if (axios.isAxiosError(err)) {
       const {
         request,
         response,
       } = err;
-      const challengeHeader = response.headers['www-authenticate'];
-      if (response.status === 401 && challengeHeader) {
+      const challengeHeader = response?.headers['www-authenticate'];
+      if (response?.status === 401) {
         if (failCount >= 3) {
           throw new Error('Authentication failed. Check credentials');
         }
 
         const { username, password } = config;
         const credentials = { username, password };
-        const authHeader = getAuthHeader(credentials, request.method, requestURI, challengeHeader);
+
+        const authType = getAuthType(challengeHeader);
+        let authHeader;
+        if (authType === ChallengeType.Digest) {
+          authHeader = getAuthHeader(credentials, request.method, requestURI, challengeHeader);
+        } else if (authType === ChallengeType.Basic) {
+          authHeader = getBasicAuthHeader(credentials);
+        } else {
+          throw new Error('Authentication failed and the challenge type is unknown.');
+        }
+
         return sendCommand(
           config,
           command,
