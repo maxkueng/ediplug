@@ -29,10 +29,10 @@ There is no need to panic. You have two options:
 
 ## Supported Devices
 
- - Edimax SP-2101W V2: Tested
+ - Edimax SP-2101W V2: Confirmed working
  - Edimax SP-2101W: Probably works
  - Edimax SP-1101W V2: Probably works
- - Edimax SP-1101W: Probably works
+ - Edimax SP-1101W: Confirmed working as of v1.1.0
 
 ## Installation
 
